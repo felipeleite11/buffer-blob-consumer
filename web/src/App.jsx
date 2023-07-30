@@ -19,7 +19,7 @@ function App() {
 				responseType: 'blob'
 			})
 
-			downloadFileFromBlob(data, 'file', 'txt')
+			downloadFileFromBlob(data, { extension: 'txt' })
 		} catch(e) {
 			console.log(e)
 		}
@@ -35,7 +35,7 @@ function App() {
 				responseType: 'blob'
 			})
 
-			downloadFileFromBlob(data, 'file', 'txt')
+			downloadFileFromBlob(data, { extension: 'txt' })
 		} catch (e) {
 			console.log(e)
 		}
@@ -49,7 +49,31 @@ function App() {
 				responseType: 'blob'
 			})
 
-			downloadFileFromBlob(data, 'file', 'pdf')
+			downloadFileFromBlob(data, { extension: 'pdf' })
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async function loadGeneratedPDFOpen() {
+		try {
+			const { data } = await axios.post('http://localhost:3333/generated_pdf', {}, {
+				responseType: 'blob'
+			})
+
+			downloadFileFromBlob(data, { extension: 'pdf', open: true })
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async function loadGeneratedPDFDownload() {
+		try {
+			const { data } = await axios.post('http://localhost:3333/generated_pdf', {}, {
+				responseType: 'blob'
+			})
+
+			downloadFileFromBlob(data, { extension: 'pdf' })
 		} catch (e) {
 			console.log(e)
 		}
@@ -61,7 +85,7 @@ function App() {
 				responseType: 'blob'
 			})
 
-			downloadFileFromBlob(data, 'file', 'xlsx')
+			downloadFileFromBlob(data, { extension: 'xlsx' })
 		} catch (e) {
 			console.log(e)
 		}
@@ -75,7 +99,7 @@ function App() {
 				responseType: 'blob'
 			})
 
-			downloadFileFromBlob(data, 'image', 'jpg')
+			downloadFileFromBlob(data, { extension: 'jpg' })
 		} catch(e) {
 			console.log(e)
 		}
@@ -100,7 +124,11 @@ function App() {
 						
 						<button className="button" onClick={loadImageFromURL}>JPG image from an external URL</button>
 						
-						<button className="button" onClick={loadPDF}>PDF file from the API</button>
+						<button className="button" onClick={loadPDF}>Blob from PDF file</button>
+						
+						<button className="button" onClick={loadGeneratedPDFDownload}>Generated PDF download</button>
+						
+						<button className="button" onClick={loadGeneratedPDFOpen}>Generated PDF open</button>
 						
 						<button className="button" onClick={loadSheet}>Sheet from the API</button>
 					</>

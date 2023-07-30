@@ -1,21 +1,22 @@
-export function forceDownloadFileFromURL(url, fileName = 'Download', extension = 'pdf') {
+export function forceDownloadFileFromURL(url, { name = 'file', extension = 'pdf', open = false }) {
     const link = document.createElement('a')
     link.href = url
     link.target = '_blank'
     link.style.display = 'none'
-    link.setAttribute('download', `${fileName}.${extension}`)
+
+    if(!open) {
+        link.setAttribute('download', `${name}.${extension}`)
+    }
 
     document.body.appendChild(link)
 
     link.click()
 
     document.body.removeChild(link)
-
-    return { url, link }
 }
 
-export function downloadFileFromBlob(arrayBuffer, fileName, extension = 'pdf') {
+export function downloadFileFromBlob(arrayBuffer, options) {
     const tempURL = URL.createObjectURL(arrayBuffer)
     
-    forceDownloadFileFromURL(tempURL, fileName, extension)
+    forceDownloadFileFromURL(tempURL, options)
 }
