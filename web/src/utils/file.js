@@ -1,5 +1,8 @@
-export function forceDownloadFileFromURL(url, { name = 'file', extension = 'pdf', open = false }) {
+export function downloadFileFromBlob(arrayBuffer, { name = 'file', extension = 'pdf', open = false }) {
+    const url = URL.createObjectURL(arrayBuffer)
+    
     const link = document.createElement('a')
+    
     link.href = url
     link.target = '_blank'
     link.style.display = 'none'
@@ -13,10 +16,4 @@ export function forceDownloadFileFromURL(url, { name = 'file', extension = 'pdf'
     link.click()
 
     document.body.removeChild(link)
-}
-
-export function downloadFileFromBlob(arrayBuffer, options) {
-    const tempURL = URL.createObjectURL(arrayBuffer)
-    
-    forceDownloadFileFromURL(tempURL, options)
 }
